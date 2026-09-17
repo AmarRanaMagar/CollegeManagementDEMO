@@ -82,7 +82,7 @@
                         <div class="col">
                             <div class="p-3 text-white bg-dark rounded-3">
                                 <h3>Welcome to your dashboard!</h3>
-                                <p><i class="bi bi-speedometer2"></i> Your school management dashboard is ready.</p>
+                                <p><i class="bi bi-speedometer2"></i> Your college management dashboard is ready.</p>
                             </div>
                         </div>
                         <div class="col">
