@@ -81,7 +81,7 @@
                     <div class="row align-items-md-stretch mt-4">
                         <div class="col">
                             <div class="p-3 text-white bg-dark rounded-3">
-                                <h3>Welcome to {{ config('app.name', 'School Management System') }}!</h3>
+                                <h3>Welcome to your dashboard!</h3>
                                 <p><i class="bi bi-speedometer2"></i> Your school management dashboard is ready.</p>
                             </div>
                         </div>
