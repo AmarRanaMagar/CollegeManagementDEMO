@@ -160,7 +160,13 @@ docker compose down
 
 ## Database safety
 
-The MySQL data is stored in the named Docker volume `dbdata`.
+The MySQL data is stored in the project folder at:
+
+```text
+docker-data/unifiedtransform/mysql
+```
+
+This directory is excluded from Git and survives container deletion. Keep regular SQL backups separately in a protected location.
 
 Do **not** use either command unless you intentionally want to delete existing data:
 
