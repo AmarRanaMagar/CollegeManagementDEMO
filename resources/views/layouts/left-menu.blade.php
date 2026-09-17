@@ -4,6 +4,11 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('home')? 'active' : '' }}" href="{{url('home')}}"><i class="ms-auto bi bi-grid"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">{{ __('Dashboard') }}</span></a>
                     </li>
+                    @if (Auth::user()->role == "admin")
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('academics*')? 'active' : '' }}" href="{{url('academics/settings')}}"><i class="bi bi-sliders"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Academic Settings</span></a>
+                    </li>
+                    @endif
                     {{-- @if (Auth::user()->role == "teacher")
                     <li class="nav-item">
                         <a type="button" href="{{url('attendances')}}" class="d-flex nav-link {{ request()->is('attendances*')? 'active' : '' }}"><i class="bi bi-calendar2-week"></i> <span class="ms-2 d-inline d-sm-none d-md-none d-xl-inline">Attendance</span></a>
@@ -126,11 +131,6 @@
                     </li>
                     <li class="nav-item border-bottom">
                         <a class="nav-link {{ request()->is('routine*')? 'active' : '' }}" href="{{route('section.routine.create')}}"><i class="bi bi-calendar4-range"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Routine</span></a>
-                    </li>
-                    @endif
-                    @if (Auth::user()->role == "admin")
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('academics*')? 'active' : '' }}" href="{{url('academics/settings')}}"><i class="bi bi-tools"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Academic</span></a>
                     </li>
                     @endif
                     @if (!session()->has('browse_session_id') && Auth::user()->role == "admin")

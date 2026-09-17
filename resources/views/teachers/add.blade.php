@@ -46,23 +46,23 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="inputAddress" class="form-label">Address<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                <input type="text" class="form-control" id="inputAddress" name="address" placeholder="634 Main St" required value="{{old('address')}}">
+                                <input type="text" class="form-control" id="inputAddress" name="address" placeholder="Putalisadak, Kathmandu" required value="{{old('address')}}">
                             </div>
                             <div class="col-md-12">
                                 <label for="inputAddress2" class="form-label">Address 2</label>
-                                <input type="text" class="form-control" id="inputAddress2" name="address2" placeholder="Apartment, studio, or floor" value="{{old('address2')}}">
+                                <input type="text" class="form-control" id="inputAddress2" name="address2" placeholder="Ward 10, near City Center" value="{{old('address2')}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="inputCity" class="form-label">City<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                <input type="text" class="form-control" id="inputCity" name="city" placeholder="Dhaka..." required value="{{old('city')}}">
+                                <input list="city-options" type="text" class="form-control" id="inputCity" name="city" placeholder="Kathmandu" required value="{{old('city', 'Kathmandu')}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="inputZip" class="form-label">Zip<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                <input type="text" class="form-control" id="inputZip" name="zip" required value="{{old('zip')}}">
+                                <input type="text" class="form-control" id="inputZip" name="zip" required value="{{old('zip', '44600')}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="inputPhone" class="form-label">Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+880 01......" required value="{{old('phone')}}">
+                                <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+977 98XXXXXXXX" required value="{{old('phone', '+977 9812345678')}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="inputGender" class="form-label">Gender<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="inputNationality" class="form-label">Nationality<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                <input type="text" class="form-control" id="inputNationality" name="nationality" placeholder="e.g. Bangladeshi, German, ..." required value="{{old('nationality')}}">
+                                <input list="nationality-options" type="text" class="form-control" id="inputNationality" name="nationality" placeholder="e.g. Nepali, ..." required value="{{old('nationality', 'Nepali')}}">
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"><i class="bi bi-person-plus"></i> Add</button>
@@ -88,4 +88,17 @@
 </div>
 
 @include('components.photos.photo-input')
+<datalist id="city-options">
+    <option value="Kathmandu">
+    <option value="Lalitpur">
+    <option value="Bhaktapur">
+    <option value="Pokhara">
+    <option value="Biratnagar">
+    <option value="Other">
+</datalist>
+<datalist id="nationality-options">
+    <option value="Nepali">
+    <option value="Indian">
+    <option value="Other">
+</datalist>
 @endsection

@@ -54,19 +54,19 @@
                                 </div>
                                 <div class="col-3-md">
                                     <label for="inputAddress" class="form-label">Address<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="634 Main St" required value="{{old('address')}}">
+                                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="Putalisadak, Kathmandu" required value="{{old('address')}}">
                                 </div>
                                 <div class="col-3-md">
                                     <label for="inputAddress2" class="form-label">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" name="address2" placeholder="Apartment, studio, or floor" value="{{old('address2')}}">
+                                    <input type="text" class="form-control" id="inputAddress2" name="address2" placeholder="Ward 10, near City Center" value="{{old('address2')}}">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputCity" class="form-label">City<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputCity" name="city" placeholder="Dhaka..." required value="{{old('city')}}">
+                                    <input list="city-options" type="text" class="form-control" id="inputCity" name="city" placeholder="Kathmandu" required value="{{old('city', 'Kathmandu')}}">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputZip" class="form-label">Zip<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputZip" name="zip" required value="{{old('zip')}}">
+                                    <input type="text" class="form-control" id="inputZip" name="zip" required value="{{old('zip', '44600')}}">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputState" class="form-label">Gender<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputNationality" class="form-label">Nationality<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputNationality" name="nationality" placeholder="e.g. Bangladeshi, German, ..." required value="{{old('nationality')}}">
+                                    <input list="nationality-options" type="text" class="form-control" id="inputNationality" name="nationality" placeholder="e.g. Nepali, ..." required value="{{old('nationality', 'Nepali')}}">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputBloodType" class="form-label">BloodType<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
@@ -106,34 +106,34 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputPhone" class="form-label">Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+880 01......" required value="{{old('phone')}}">
+                                    <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+977 98XXXXXXXX" required value="{{old('phone', '+977 9812345678')}}">
                                 </div>
                                 <div class="col-5-md">
                                     <label for="inputIdCardNumber" class="form-label">Id Card Number<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputIdCardNumber" name="id_card_number" placeholder="e.g. 2021-03-01-02-01 (Year Semester Class Section Roll)" required value="{{old('id_card_number')}}">
+                                    <input type="text" class="form-control" id="inputIdCardNumber" name="id_card_number" placeholder="e.g. 2021-03-01-02-01 (Year Semester Class Section Roll)" required value="{{old('id_card_number', 'TEMP-' . date('YmdHis'))}}">
                                 </div>
                             </div>
                             <div class="row mt-4 g-3">
                                 <h6>Parents' Information</h6>
                                 <div class="col-md-3">
                                     <label for="inputFatherName" class="form-label">Father Name<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputFatherName" name="father_name" placeholder="Father Name" required value="{{old('father_name')}}">
+                                    <input type="text" class="form-control" id="inputFatherName" name="father_name" placeholder="Father Name" required value="{{old('father_name', 'Father')}}">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputFatherPhone" class="form-label">Father's Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputFatherPhone" name="father_phone" placeholder="+880 01......" required value="{{old('father_phone')}}">
+                                    <input type="text" class="form-control" id="inputFatherPhone" name="father_phone" placeholder="+977 98XXXXXXXX" required value="{{old('father_phone', '+977 9812345678')}}">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputMotherName" class="form-label">Mother Name<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputMotherName" name="mother_name" placeholder="Mother Name" required value="{{old('mother_name')}}">
+                                    <input type="text" class="form-control" id="inputMotherName" name="mother_name" placeholder="Mother Name" required value="{{old('mother_name', 'Mother')}}">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputMotherPhone" class="form-label">Mother's Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputMotherPhone" name="mother_phone" placeholder="+880 01......" required value="{{old('mother_name')}}">
+                                    <input type="text" class="form-control" id="inputMotherPhone" name="mother_phone" placeholder="+977 98XXXXXXXX" required value="{{old('mother_phone', '+977 9812345678')}}">
                                 </div>
                                 <div class="col-4-md">
                                     <label for="inputParentAddress" class="form-label">Address<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputParentAddress" name="parent_address" placeholder="634 Main St" required value="{{old('parent_address')}}">
+                                    <input type="text" class="form-control" id="inputParentAddress" name="parent_address" placeholder="New Road, Kathmandu" required value="{{old('parent_address', 'New Road, Kathmandu')}}">
                                 </div>
                             </div>
                             <div class="row mt-4 g-3">
@@ -173,6 +173,19 @@
         </div>
     </div>
 </div>
+<datalist id="city-options">
+    <option value="Kathmandu">
+    <option value="Lalitpur">
+    <option value="Bhaktapur">
+    <option value="Pokhara">
+    <option value="Biratnagar">
+    <option value="Other">
+</datalist>
+<datalist id="nationality-options">
+    <option value="Nepali">
+    <option value="Indian">
+    <option value="Other">
+</datalist>
 <script>
     function getSections(obj) {
         var class_id = obj.options[obj.selectedIndex].value;

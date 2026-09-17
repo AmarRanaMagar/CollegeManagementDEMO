@@ -7,6 +7,8 @@ interface UserInterface {
 
     public function updateTeacher($request);
 
+    public function updateProfilePhoto($user_id, $photo);
+
     public function createStudent($request);
 
     public function updateStudent($request);

@@ -41,16 +41,26 @@
                                     <input type="date" class="form-control" id="inputBirthday" name="birthday" placeholder="Birthday" required value="{{$student->birthday}}">
                                 </div>
                                 <div class="col-3">
+                                    <label for="formFile" class="form-label">Profile photo</label>
+                                    <input class="form-control" type="file" id="formFile" accept=".jpg,.jpeg,.png" onchange="previewFile()">
+                                    <div id="previewPhoto" class="mt-2">
+                                        @if ($student->photo)
+                                            <img src="{{asset('/storage'.$student->photo)}}" alt="Current profile photo" height="100">
+                                        @endif
+                                    </div>
+                                    <input type="hidden" id="photoHiddenInput" name="photo" value="">
+                                </div>
+                                <div class="col-3">
                                     <label for="inputAddress" class="form-label">Address<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="634 Main St" required value="{{$student->address}}">
+                                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="Putalisadak, Kathmandu" required value="{{$student->address}}">
                                 </div>
                                 <div class="col-3">
                                     <label for="inputAddress2" class="form-label">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" name="address2" placeholder="Apartment, studio, or floor" value="{{$student->address2}}">
+                                    <input type="text" class="form-control" id="inputAddress2" name="address2" placeholder="Ward 10, near City Center" value="{{$student->address2}}">
                                 </div>
                                 <div class="col-2">
                                     <label for="inputCity" class="form-label">City<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputCity" name="city" placeholder="Dhaka..." required value="{{$student->city}}">
+                                    <input list="city-options" type="text" class="form-control" id="inputCity" name="city" placeholder="Kathmandu" required value="{{$student->city}}">
                                 </div>
                                 <div class="col-2">
                                     <label for="inputZip" class="form-label">Zip<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
@@ -65,8 +75,21 @@
                                 </div>
                                 <div class="col-2">
                                     <label for="inputNationality" class="form-label">Nationality<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputNationality" name="nationality" placeholder="e.g. Bangladeshi, German, ..." required value="{{$student->nationality}}">
+                                    <input list="nationality-options" type="text" class="form-control" id="inputNationality" name="nationality" placeholder="e.g. Nepali, ..." required value="{{$student->nationality}}">
                                 </div>
+                                <datalist id="city-options">
+                                    <option value="Kathmandu">
+                                    <option value="Lalitpur">
+                                    <option value="Bhaktapur">
+                                    <option value="Pokhara">
+                                    <option value="Biratnagar">
+                                    <option value="Other">
+                                </datalist>
+                                <datalist id="nationality-options">
+                                    <option value="Nepali">
+                                    <option value="Indian">
+                                    <option value="Other">
+                                </datalist>
                                 <div class="col-2">
                                     <label for="inputBloodType" class="form-label">BloodType<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
                                     <select id="inputBloodType" class="form-select" name="blood_type" required>
@@ -94,7 +117,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label for="inputPhone" class="form-label">Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+880 01......" required value="{{$student->phone}}">
+                                    <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+977 98XXXXXXXX" required value="{{$student->phone}}">
                                 </div>
                                 <div class="col-3">
                                     <label for="inputIdCardNumber" class="form-label">Id Card Number<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
@@ -109,7 +132,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label for="inputFatherPhone" class="form-label">Father's Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputFatherPhone" name="father_phone" placeholder="+880 01......" required value="{{$parent_info->father_phone}}">
+                                    <input type="text" class="form-control" id="inputFatherPhone" name="father_phone" placeholder="+977 98XXXXXXXX" required value="{{$parent_info->father_phone}}">
                                 </div>
                                 <div class="col-3">
                                     <label for="inputMotherName" class="form-label">Mother Name<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
@@ -117,11 +140,11 @@
                                 </div>
                                 <div class="col-3">
                                     <label for="inputMotherPhone" class="form-label">Mother's Phone<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputMotherPhone" name="mother_phone" placeholder="+880 01......" required value="{{$parent_info->mother_phone}}">
+                                    <input type="text" class="form-control" id="inputMotherPhone" name="mother_phone" placeholder="+977 98XXXXXXXX" required value="{{$parent_info->mother_phone}}">
                                 </div>
                                 <div class="col-4">
                                     <label for="inputParentAddress" class="form-label">Address<sup><i class="bi bi-asterisk text-primary"></i></sup></label>
-                                    <input type="text" class="form-control" id="inputParentAddress" name="parent_address" placeholder="634 Main St" required value="{{$parent_info->parent_address}}">
+                                    <input type="text" class="form-control" id="inputParentAddress" name="parent_address" placeholder="New Road, Kathmandu" required value="{{$parent_info->parent_address}}">
                                 </div>
                             </div>
                             <div class="row mt-4">
