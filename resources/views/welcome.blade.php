@@ -118,25 +118,9 @@
                 linear-gradient(135deg, #101e3b 0%, #1e3470 55%, #3155d9 100%);
         }
 
-        .hero::after {
-            position: absolute;
-            right: -120px;
-            bottom: -190px;
-            width: 470px;
-            height: 470px;
-            content: '';
-            border: 1px solid rgba(255, 255, 255, .16);
-            border-radius: 50%;
-            box-shadow: 0 0 0 42px rgba(255, 255, 255, .04), 0 0 0 84px rgba(255, 255, 255, .03);
-        }
-
         .hero-grid {
             position: relative;
             z-index: 1;
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(360px, .9fr);
-            align-items: center;
-            gap: 64px;
         }
 
         .eyebrow {
@@ -218,91 +202,6 @@
             background: rgba(255, 255, 255, .1);
         }
 
-        .dashboard-preview {
-            padding: 18px;
-            background: rgba(255, 255, 255, .13);
-            border: 1px solid rgba(255, 255, 255, .2);
-            border-radius: 22px;
-            box-shadow: 0 25px 60px rgba(8, 19, 53, .28);
-            backdrop-filter: blur(12px);
-        }
-
-        .preview-window {
-            padding: 20px;
-            background: #fff;
-            border-radius: 15px;
-        }
-
-        .preview-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 22px;
-        }
-
-        .preview-title {
-            font-weight: 800;
-        }
-
-        .preview-dots {
-            display: flex;
-            gap: 5px;
-        }
-
-        .preview-dots span {
-            width: 7px;
-            height: 7px;
-            background: #cbd5e1;
-            border-radius: 50%;
-        }
-
-        .preview-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .preview-stat {
-            padding: 14px 10px;
-            background: #f6f8ff;
-            border-radius: 10px;
-        }
-
-        .preview-stat strong {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .preview-stat span {
-            color: var(--muted);
-            font-size: .67rem;
-        }
-
-        .preview-chart {
-            height: 110px;
-            padding: 16px;
-            background: linear-gradient(180deg, #f7f9ff, #fff);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
-
-        .chart-lines {
-            display: flex;
-            align-items: end;
-            justify-content: space-around;
-            height: 100%;
-            gap: 8px;
-        }
-
-        .chart-lines span {
-            width: 12%;
-            background: linear-gradient(180deg, #7187f1, #3155d9);
-            border-radius: 5px 5px 2px 2px;
-        }
-
         .features {
             padding: 72px 0 82px;
         }
@@ -372,11 +271,6 @@
         }
 
         @media (max-width: 820px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 42px;
-            }
-
             .hero {
                 padding: 64px 0 72px;
             }
@@ -418,7 +312,6 @@
                 font-size: .98rem;
             }
 
-            .preview-stats,
             .feature-grid {
                 grid-template-columns: 1fr 1fr;
             }
@@ -469,30 +362,6 @@
                     </div>
                 </div>
 
-                <div class="dashboard-preview" aria-label="Dashboard preview">
-                    <div class="preview-window">
-                        <div class="preview-bar">
-                            <span class="preview-title">College overview</span>
-                            <span class="preview-dots"><span></span><span></span><span></span></span>
-                        </div>
-                        <div class="preview-stats">
-                            <div class="preview-stat"><strong>24</strong><span>Classes</span></div>
-                            <div class="preview-stat"><strong>86</strong><span>Teachers</span></div>
-                            <div class="preview-stat"><strong>1.2k</strong><span>Students</span></div>
-                        </div>
-                        <div class="preview-chart">
-                            <div class="chart-lines">
-                                <span style="height: 38%;"></span>
-                                <span style="height: 58%;"></span>
-                                <span style="height: 45%;"></span>
-                                <span style="height: 76%;"></span>
-                                <span style="height: 64%;"></span>
-                                <span style="height: 91%;"></span>
-                                <span style="height: 82%;"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 

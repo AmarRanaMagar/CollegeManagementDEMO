@@ -1,32 +1,19 @@
-FROM php:8.2-fpm
+FROM php:8.1-fpm
 
-# Copy composer.lock and composer.json
+# Copy dependency manifests first to keep the Composer layer cacheable.
 COPY composer.lock composer.json /var/www/
 
 # Set working directory
 WORKDIR /var/www
 
-# Install dependencies
-# RUN apt-get update && apt-get install -y \
-#     build-essential \
-#     libpng-dev \
-#     libjpeg62-turbo-dev \
-#     libfreetype6-dev \
-#     locales \
-#     zip \
-#     jpegoptim optipng pngquant gifsicle \
-#     unzip \
-#     git \
-#     curl \
-#     libzip-dev
-
 RUN apt-get update && apt-get install -y \
     build-essential \
+    curl \
+    git \
     libzip-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
-    libxml2 \
-    wget
+    libxml2
 
 # RUN pecl install xdebug-2.9.2 \
 # 	&& docker-php-ext-enable xdebug \
@@ -39,20 +26,26 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql zip exif pcntl
 RUN docker-php-ext-install gd && docker-php-ext-enable gd
 
-# Install composer
+# Install Composer and production dependencies.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-progress \
+    --prefer-dist \
+    --no-scripts \
+    --ignore-platform-req=php
 
 # Add user for laravel application
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy existing application directory contents
-COPY . /var/www
-
-# Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
-# Change current user to www
+# Generate the optimized autoloader after the application is present.
+RUN composer dump-autoload --no-dev --optimize
+
 USER www
 
 # Expose port 9000 and start php-fpm server

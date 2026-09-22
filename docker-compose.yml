@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
+    image: college-management-demo/php:latest
     container_name: app
     restart: unless-stopped
     tty: true
@@ -22,7 +22,7 @@ services:
 
   #Nginx Service
   webserver:
-    image: nginx:alpine
+    image: college-management-demo/nginx:alpine
     container_name: webserver
     restart: unless-stopped
     tty: true
@@ -37,7 +37,7 @@ services:
 
   #MySQL Service
   db:
-    image: mysql:5.7.22
+    image: college-management-demo/mysql:5.7.22
     container_name: db
     restart: unless-stopped
     tty: true

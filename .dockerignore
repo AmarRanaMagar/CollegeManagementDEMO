@@ -1,0 +1,51 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Version-control and editor files
+.git
+.gitignore
+.gitattributes
+.github
+.idea
+.vscode
+
+# PHP and JavaScript dependencies/build tooling
+vendor
+node_modules
+package.json
+package-lock.json
+webpack.mix.js
+
+# Tests and development-only files
+tests
+phpunit.xml
+.phpunit.result.cache
+.travis.yml
+.styleci.yml
+
+# Local Docker/infrastructure files
+docker-compose*.yml
+docker-data
+backups
+Dockerfile*
+nginx
+mysql
+php
+
+# Documentation and project metadata
+README*
+LICENSE
+
+# Logs, caches, and generated local files
+*.log
+npm-debug.log
+yarn-error.log
+public/hot
+public/storage
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*.php
