@@ -5,6 +5,7 @@ pipeline {
         COMPOSE_PROJECT_NAME = "college-management-jenkins-${env.BUILD_NUMBER}"
         APP_PORT = "18080"
         DB_PORT = "13307"
+        HTTPS_PORT = "14443"
         MYSQL_DATA_DIR = "./jenkins-mysql"
     }
 
