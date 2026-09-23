@@ -37,6 +37,28 @@ jobs:
       - name: Build and start application
         run: docker compose up -d --build
 
+      - name: Wait for MySQL
+        shell: bash
+        run: |
+          for attempt in {1..30}; do
+            if docker compose exec -T db \
+              mysqladmin ping -h 127.0.0.1 -uroot -pyour_mysql_root_password \
+              --silent; then
+              echo "MySQL is ready."
+              exit 0
+            fi
+            sleep 2
+          done
+
+          docker compose logs db
+          exit 1
+
+      - name: Run database migrations
+        run: docker compose exec -T app php artisan migrate --force
+
+      - name: Seed demo database
+        run: docker compose exec -T app php artisan db:seed --force
+
       - name: Wait for application
         shell: bash
         run: |
@@ -77,6 +99,15 @@ jobs:
 
           cat cloudflared.log
           exit 1
+
+      - name: Configure preview URL
+        shell: bash
+        run: |
+          preview_url="$(grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' cloudflared.log | head -n 1)"
+          sed -i "s#^APP_URL=.*#APP_URL=$preview_url#" .env
+          docker compose exec -T app php artisan config:clear
+          docker compose exec -T app php artisan view:clear
+          echo "Configured Laravel APP_URL: $preview_url"
 
       - name: Keep demo available
         run: sleep 1800
