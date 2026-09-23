@@ -16,6 +16,8 @@ services:
     volumes:
       - ./:/var/www
       - vendor:/var/www/vendor
+      - storage:/var/www/storage
+      - bootstrap-cache:/var/www/bootstrap/cache
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
@@ -61,3 +63,5 @@ networks:
 
 volumes:
   vendor:
+  storage:
+  bootstrap-cache:
