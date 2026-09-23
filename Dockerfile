@@ -1,53 +1,59 @@
-FROM php:8.1-fpm
+# syntax=docker/dockerfile:1.7
 
-# Copy dependency manifests first to keep the Composer layer cacheable.
-COPY composer.lock composer.json /var/www/
+FROM php:8.1-fpm AS builder
 
-# Set working directory
 WORKDIR /var/www
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
-    git \
-    libzip-dev \
-    libpng-dev \
     libjpeg62-turbo-dev \
-    libxml2
+    libpng-dev \
+    libzip-dev \
+    libxml2-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# RUN pecl install xdebug-2.9.2 \
-# 	&& docker-php-ext-enable xdebug \
-#     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" gd pdo_mysql zip exif pcntl
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY composer.lock composer.json ./
 
-# Install extensions
-RUN docker-php-ext-install pdo_mysql zip exif pcntl
-RUN docker-php-ext-install gd && docker-php-ext-enable gd
+RUN curl -sS https://getcomposer.org/installer | php \
+    -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Composer and production dependencies.
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install \
-    --no-dev \
-    --no-interaction \
-    --no-progress \
-    --prefer-dist \
-    --no-scripts \
-    --ignore-platform-req=php
+RUN --mount=type=cache,target=/root/.composer/cache \
+    composer install \
+        --no-dev \
+        --no-interaction \
+        --no-progress \
+        --prefer-dist \
+        --no-scripts \
+        --ignore-platform-req=php
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+COPY . .
 
-# Copy existing application directory contents
-COPY --chown=www:www . /var/www
-
-# Generate the optimized autoloader after the application is present.
 RUN composer dump-autoload --no-dev --optimize
+
+FROM php:8.1-fpm AS runtime
+
+WORKDIR /var/www
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libjpeg62-turbo \
+    libpng16-16 \
+    libzip5 \
+    libxml2 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/local/lib/php/extensions/ /usr/local/lib/php/extensions/
+
+RUN docker-php-ext-enable gd pdo_mysql zip exif pcntl \
+    && groupadd -g 1000 www \
+    && useradd -u 1000 -ms /bin/bash -g www www
+
+COPY --from=builder --chown=www:www /var/www /var/www
 
 USER www
 
-# Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
