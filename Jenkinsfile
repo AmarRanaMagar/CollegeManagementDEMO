@@ -21,6 +21,15 @@ pipeline {
             }
         }
 
+        stage('Prepare base images') {
+            steps {
+                bat 'docker pull nginx:alpine'
+                bat 'docker tag nginx:alpine college-management-demo/nginx:alpine'
+                bat 'docker pull mysql:5.7.22'
+                bat 'docker tag mysql:5.7.22 college-management-demo/mysql:5.7.22'
+            }
+        }
+
         stage('Build application image') {
             steps {
                 bat 'docker compose build app'
