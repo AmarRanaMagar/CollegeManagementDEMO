@@ -1,0 +1,92 @@
+name: Demo preview
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Create temporary CI environment
+        shell: bash
+        run: |
+          cp .env.example .env
+          sed -i 's/^APP_ENV=.*/APP_ENV=local/' .env
+          sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
+          sed -i 's#^APP_URL=.*#APP_URL=http://localhost:8080#' .env
+          sed -i 's/^DB_HOST=.*/DB_HOST=db/' .env
+          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env
+          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=your_mysql_root_password/' .env
+
+      - name: Prepare public service images
+        run: |
+          docker pull nginx:alpine
+          docker tag nginx:alpine college-management-demo/nginx:alpine
+          docker pull mysql:5.7.22
+          docker tag mysql:5.7.22 college-management-demo/mysql:5.7.22
+
+      - name: Build and start application
+        run: docker compose up -d --build
+
+      - name: Generate application key
+        run: docker compose exec -T app php artisan key:generate --force
+
+      - name: Wait for application
+        shell: bash
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:8080/ > /dev/null; then
+              echo "Application is ready."
+              exit 0
+            fi
+            sleep 2
+          done
+
+          docker compose logs
+          exit 1
+
+      - name: Install Cloudflare Tunnel
+        shell: bash
+        run: |
+          curl --fail --silent --show-error \
+            -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 \
+            -o cloudflared
+          chmod +x cloudflared
+
+      - name: Start public demo tunnel
+        shell: bash
+        run: |
+          ./cloudflared tunnel --no-autoupdate --url http://localhost:8080 \
+            > cloudflared.log 2>&1 &
+          echo $! > cloudflared.pid
+
+          for attempt in {1..20}; do
+            preview_url="$(grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' cloudflared.log | head -n 1 || true)"
+            if [ -n "$preview_url" ]; then
+              echo "Demo preview URL: $preview_url"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          cat cloudflared.log
+          exit 1
+
+      - name: Keep demo available
+        run: sleep 1800
+
+      - name: Collect logs
+        if: always()
+        run: docker compose logs
+
+      - name: Stop demo
+        if: always()
+        run: docker compose down
