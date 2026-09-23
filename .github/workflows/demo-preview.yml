@@ -26,6 +26,7 @@ jobs:
           sed -i 's/^DB_HOST=.*/DB_HOST=db/' .env
           sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env
           sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=your_mysql_root_password/' .env
+          sed -i 's/^MAIL_MAILER=.*/MAIL_MAILER=log/' .env
 
       - name: Prepare public service images
         run: |
