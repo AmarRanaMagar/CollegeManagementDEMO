@@ -59,6 +59,14 @@ jobs:
       - name: Seed demo database
         run: docker compose exec -T app php artisan db:seed --force
 
+      - name: Verify demo login
+        run: |
+          docker compose exec -T app php artisan tinker --execute="
+            abort_unless(\App\Models\User::where('email', 'admin@ut.com')->exists(), 1);
+            abort_unless(\Illuminate\Support\Facades\Hash::check('password', \App\Models\User::where('email', 'admin@ut.com')->first()->password), 1);
+          "
+          echo "Demo login: admin@ut.com / password"
+
       - name: Wait for application
         shell: bash
         run: |

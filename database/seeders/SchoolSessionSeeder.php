@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SchoolSession;
 use Illuminate\Database\Seeder;
 
 class SchoolSessionSeeder extends Seeder
@@ -13,6 +14,8 @@ class SchoolSessionSeeder extends Seeder
      */
     public function run()
     {
-        //
+        SchoolSession::firstOrCreate([
+            'session_name' => 'Demo Academic Session',
+        ]);
     }
 }
