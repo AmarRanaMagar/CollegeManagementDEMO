@@ -10,6 +10,10 @@
 .github
 .idea
 .vscode
+jenkins-home
+.jenkins
+jenkins-workspace
+jenkins-*.log
 
 # PHP and JavaScript dependencies/build tooling
 vendor

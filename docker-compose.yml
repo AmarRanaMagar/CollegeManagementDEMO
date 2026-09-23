@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
     image: college-management-demo/php:latest
-    container_name: app
     restart: unless-stopped
     tty: true
     environment:
@@ -25,11 +24,10 @@ services:
   #Nginx Service
   webserver:
     image: college-management-demo/nginx:alpine
-    container_name: webserver
     restart: unless-stopped
     tty: true
     ports:
-      - "8080:80"
+      - "${APP_PORT:-8080}:80"
       - "443:443"
     volumes:
       - ./:/var/www
@@ -40,18 +38,17 @@ services:
   #MySQL Service
   db:
     image: college-management-demo/mysql:5.7.22
-    container_name: db
     restart: unless-stopped
     tty: true
     ports:
-      - "3307:3306"
+      - "${DB_PORT:-3307}:3306"
     environment:
       MYSQL_DATABASE: unifiedtransform
       MYSQL_ROOT_PASSWORD: your_mysql_root_password
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./docker-data/unifiedtransform/mysql:/var/lib/mysql
+      - "${MYSQL_DATA_DIR:-./docker-data/unifiedtransform/mysql}:/var/lib/mysql"
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
