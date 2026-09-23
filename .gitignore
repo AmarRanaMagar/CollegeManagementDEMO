@@ -19,4 +19,5 @@ yarn-error.log
 /jenkins-home/
 /.jenkins/
 /jenkins-workspace/
+/jenkins-mysql/
 jenkins-*.log
