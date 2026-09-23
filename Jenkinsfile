@@ -86,8 +86,8 @@ pipeline {
 
     post {
         always {
-            bat 'docker compose logs --no-color'
-            bat 'docker compose down -v --remove-orphans'
+            bat 'docker compose logs --no-color || exit /b 0'
+            bat 'docker compose down -v --remove-orphans || exit /b 0'
         }
         cleanup {
             deleteDir()
