@@ -22,6 +22,7 @@ jobs:
           sed -i 's/^APP_ENV=.*/APP_ENV=local/' .env
           sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
           sed -i 's#^APP_URL=.*#APP_URL=http://localhost:8080#' .env
+          sed -i "s#^APP_KEY=.*#APP_KEY=base64:$(openssl rand -base64 32 | tr -d '\n')#" .env
           sed -i 's/^DB_HOST=.*/DB_HOST=db/' .env
           sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env
           sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=your_mysql_root_password/' .env
@@ -35,9 +36,6 @@ jobs:
 
       - name: Build and start application
         run: docker compose up -d --build
-
-      - name: Generate application key
-        run: docker compose exec -T app php artisan key:generate --force
 
       - name: Wait for application
         shell: bash
