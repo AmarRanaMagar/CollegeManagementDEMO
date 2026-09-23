@@ -16,6 +16,33 @@ pipeline {
             }
         }
 
+        stage('Prepare CI environment') {
+            steps {
+                powershell '''
+                    Copy-Item .env.example .env -Force
+                    $bytes = New-Object byte[] 32
+                    [Security.Cryptography.RandomNumberGenerator]::Fill($bytes)
+                    $appKey = "base64:" + [Convert]::ToBase64String($bytes)
+                    $envFile = Get-Content .env -Raw
+                    $replacements = @{
+                        '^APP_ENV=.*' = 'APP_ENV=local'
+                        '^APP_DEBUG=.*' = 'APP_DEBUG=false'
+                        '^APP_URL=.*' = 'APP_URL=http://localhost:18080'
+                        '^APP_KEY=.*' = "APP_KEY=$appKey"
+                        '^DB_HOST=.*' = 'DB_HOST=db'
+                        '^DB_DATABASE=.*' = 'DB_DATABASE=unifiedtransform'
+                        '^DB_USERNAME=.*' = 'DB_USERNAME=root'
+                        '^DB_PASSWORD=.*' = 'DB_PASSWORD=your_mysql_root_password'
+                        '^MAIL_MAILER=.*' = 'MAIL_MAILER=log'
+                    }
+                    foreach ($pattern in $replacements.Keys) {
+                        $envFile = $envFile -replace "(?m)$pattern", $replacements[$pattern]
+                    }
+                    Set-Content .env $envFile -NoNewline
+                '''
+            }
+        }
+
         stage('Validate Compose') {
             steps {
                 bat 'docker compose config --quiet'
@@ -48,7 +75,7 @@ pipeline {
                 powershell '''
                     $ready = $false
                     for ($attempt = 1; $attempt -le 30; $attempt++) {
-                        docker compose exec -T db mysqladmin ping -h 127.0.0.1 -uroot -pyour_mysql_root_password --silent
+                        docker compose exec -T db mysqladmin ping -h 127.0.0.1 -uroot -pyour_mysql_root_password --silent 2>$null
                         if ($LASTEXITCODE -eq 0) {
                             $ready = $true
                             break
