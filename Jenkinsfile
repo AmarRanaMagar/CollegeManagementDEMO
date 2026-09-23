@@ -21,7 +21,9 @@ pipeline {
                 powershell '''
                     Copy-Item .env.example .env -Force
                     $bytes = New-Object byte[] 32
-                    [Security.Cryptography.RandomNumberGenerator]::Fill($bytes)
+                    $random = [Security.Cryptography.RandomNumberGenerator]::Create()
+                    $random.GetBytes($bytes)
+                    $random.Dispose()
                     $appKey = "base64:" + [Convert]::ToBase64String($bytes)
                     $envFile = Get-Content .env -Raw
                     $replacements = @{
