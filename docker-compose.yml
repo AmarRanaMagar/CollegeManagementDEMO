@@ -1,4 +1,3 @@
-version: '3'
 services:
 
   #PHP Service
@@ -16,6 +15,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
+      - vendor:/var/www/vendor
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
@@ -58,3 +58,6 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  vendor:
