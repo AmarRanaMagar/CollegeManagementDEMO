@@ -9,15 +9,15 @@
 
     <title>{{ config('app.name', 'Unifiedtransform') }}</title>
 
-    <link rel="shortcut icon" href="{{asset('favicon_io/favicon.ico')}}">
-    <link rel="shortcut icon" sizes="16x16" href="{{asset('favicon_io/favicon-16x16.png')}}">
-    <link rel="shortcut icon" sizes="32x32" href="{{asset('favicon_io/favicon-32x32.png')}}">
-    <link rel="apple-touch-icon" href="{{asset('favicon_io/apple-touch-icon.png')}}">
-    <link rel="icon" href="{{asset('favicon_io/android-chrome-192x192.png')}}" sizes="192x192">
-    <link rel="icon" href="{{asset('favicon_io/android-chrome-512x512.png')}}" sizes="512x512">
+    <link rel="shortcut icon" href="/favicon_io/favicon.ico">
+    <link rel="shortcut icon" sizes="16x16" href="/favicon_io/favicon-16x16.png">
+    <link rel="shortcut icon" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicon_io/apple-touch-icon.png">
+    <link rel="icon" href="/favicon_io/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" href="/favicon_io/android-chrome-512x512.png" sizes="512x512">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
 
     <!-- Fonts -->
@@ -25,8 +25,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
    
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
