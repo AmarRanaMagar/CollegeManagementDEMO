@@ -1,3 +1,4 @@
+version: '3'
 services:
 
   #PHP Service
@@ -5,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: college-management-demo/php:latest
+    image: mewton123/unifiedtransform:php
     restart: unless-stopped
     tty: true
     environment:
@@ -23,7 +24,7 @@ services:
 
   #Nginx Service
   webserver:
-    image: college-management-demo/nginx:alpine
+    image: mewton123/unifiedtransform:nginx
     restart: unless-stopped
     tty: true
     ports:
@@ -37,7 +38,7 @@ services:
 
   #MySQL Service
   db:
-    image: college-management-demo/mysql:5.7.22
+    image: mewton123/unifiedtransform:mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -57,7 +58,6 @@ services:
 networks:
   app-network:
     driver: bridge
-
 volumes:
   vendor:
   storage:

@@ -51,12 +51,22 @@ pipeline {
             }
         }
 
-        stage('Prepare base images') {
+        stage('Authenticate and pull Docker Hub images') {
             steps {
-                bat 'docker pull nginx:alpine'
-                bat 'docker tag nginx:alpine college-management-demo/nginx:alpine'
-                bat 'docker pull mysql:5.7.22'
-                bat 'docker tag mysql:5.7.22 college-management-demo/mysql:5.7.22'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKERHUB_USERNAME',
+                    passwordVariable: 'DOCKERHUB_TOKEN'
+                )]) {
+                    powershell '''
+                        $env:DOCKERHUB_TOKEN | docker login --username $env:DOCKERHUB_USERNAME --password-stdin
+                        if ($LASTEXITCODE -ne 0) {
+                            exit $LASTEXITCODE
+                        }
+                    '''
+                }
+                bat 'docker pull mewton123/unifiedtransform:nginx'
+                bat 'docker pull mewton123/unifiedtransform:mysql'
             }
         }
 
@@ -118,6 +128,7 @@ pipeline {
         always {
             bat 'docker compose logs --no-color || exit /b 0'
             bat 'docker compose down -v --remove-orphans || exit /b 0'
+            bat 'docker logout || exit /b 0'
         }
         cleanup {
             deleteDir()
