@@ -59,6 +59,12 @@ pipeline {
                     passwordVariable: 'DOCKERHUB_TOKEN'
                 )]) {
                     powershell '''
+                        Write-Host "Docker Hub username supplied: $env:DOCKERHUB_USERNAME"
+                        if ([string]::IsNullOrWhiteSpace($env:DOCKERHUB_TOKEN)) {
+                            throw "Jenkins supplied an empty Docker Hub token."
+                        }
+                        Write-Host "Docker Hub token supplied: yes (value hidden)"
+
                         $env:DOCKERHUB_TOKEN | docker login --username $env:DOCKERHUB_USERNAME --password-stdin
                         if ($LASTEXITCODE -ne 0) {
                             exit $LASTEXITCODE
